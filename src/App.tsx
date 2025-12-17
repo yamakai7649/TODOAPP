@@ -56,21 +56,24 @@ function App() {
   return (
     <>
       <div className='flex justify-center items-center w-screen h-screen'>
-        <div className='flex flex-col justify-center items-center'>
-          <h1>TODO APP</h1>
-          <form className='flex' onSubmit={handleAddTodo}>
+        <div className='flex flex-col items-center w-2/3 h-3/4 rounded-3xl bg-gray-100 gap-2 p-4'>
+          <h1 className='text-3xl font-medium'>TODO APP</h1>
+          <form className='flex w-2/3 ' onSubmit={handleAddTodo}>
             <input type="text" placeholder='Add Todo Item' value={inp} onChange={(e) => setInp(e.target.value)} />
-            <button type='submit'>追加</button>
+            <button type='submit' disabled={inp ? false : true}>追加</button>
           </form>
-          <div>
+          <div className='w-2/3'>
             {
-              todos?.map((todo: Todo) => (
-                <div key={todo.id} className='flex'>
-                  <input type="checkbox" checked={todo.completed} onChange={() => handleCompleteTodo(todo.id)} />
-                  <input type="text" value={todo.content} onChange={e => handleEditTodo(todo.id, e.target.value)} disabled={todo.completed} />
-                  <button onClick={() => handleDeleteTodo(todo.id)}>削除</button>
-                </div>
-              ))
+              todos.length === 0 ?
+                <p>Nothing yet</p>
+                :
+                todos.map((todo: Todo) => (
+                  <div key={todo.id} className='flex'>
+                    <input type="checkbox" checked={todo.completed} onChange={() => handleCompleteTodo(todo.id)} />
+                    <input type="text" value={todo.content} onChange={e => handleEditTodo(todo.id, e.target.value)} disabled={todo.completed} />
+                    <button onClick={() => handleDeleteTodo(todo.id)}>削除</button>
+                  </div>
+                ))
             }
           </div>
         </div>
